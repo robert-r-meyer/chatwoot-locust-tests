@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export API_ACCESS_TOKEN=
+export ACCOUNT_ID=
+export INBOX_ID=
