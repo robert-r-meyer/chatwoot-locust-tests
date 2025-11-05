@@ -24,6 +24,7 @@ class MessageUser(HttpUser):
         name: str = fake.name()
         email: str = fake.email()
         payload = {"inbox_id": self.inbox_id, "name": name, "email": email}
+
         response = self.client.post(
             f"/api/v1/accounts/{self.account_id}/contacts",
             json=payload,
@@ -69,10 +70,14 @@ class MessageUser(HttpUser):
                 raise ConversationFailedException("Conversation Creation Failed") from e
 
     def on_start(self):
+        # For conversation
         self.source_id = fake.uuid4()
+
+        # Env Loads
         self.api_access_token = os.getenv("API_ACCESS_TOKEN", "99999")
         self.account_id = os.getenv("ACCOUNT_ID", "99999")
         self.inbox_id = os.getenv("INBOX_ID", "99999")
+
         self.headers = {
             "api_access_token": self.api_access_token,
             "Content-type": "application/json",

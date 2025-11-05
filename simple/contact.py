@@ -1,6 +1,9 @@
 import os
 
 import requests
+from faker import Faker
+
+fake = Faker()
 
 inbox_id = os.getenv("INBOX_ID", "9999999")
 account_id = os.getenv("ACCOUNT_ID", "9999999")
@@ -9,12 +12,12 @@ url = f"http://experience.experience:3000/api/v1/accounts/{account_id}/contacts"
 
 payload = {
     "inbox_id": inbox_id,
-    "name": "Alice",
-    "email": "alice@acme.inc",
+    "name": fake.name(),
+    "email": fake.email(),
     "blocked": False,
-    "phone_number": "+123456789",
+    "phone_number": fake.phone_number(),
     "avatar_url": "https://example.com/avatar.png",
-    "identifier": "1234567890",
+    "identifier": fake.uuid4(),
     "additional_attributes": {"type": "customer", "age": 30},
     "custom_attributes": {},
 }
