@@ -8,3 +8,8 @@ dependencies = [
     "faker>=37.12.0",
     "locust>=2.42.1",
 ]
+
+[dependency-groups]
+dev = [
+    "pudb>=2025.1.3",
+]

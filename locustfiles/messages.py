@@ -32,7 +32,10 @@ class MessageUser(HttpUser):
 
         if response.status_code == 200:
             json_response_dict = response.json()
-            return str(json_response_dict["payload"]["contact_inbox"]["source_id"])
+            print("response body is: ", json_response_dict)
+            # The contact ID is located at payload -> contact -> id
+            # This is the DB ID of the contact created
+            return str(json_response_dict["payload"]["contact"]["id"])
         else:
             try:
                 print("response status code is: ", response.status_code)
@@ -43,7 +46,11 @@ class MessageUser(HttpUser):
 
     def create_conversation(self):
         print("Creating Conversation")
-        payload = {"source_id": self.contact_source_id}
+        payload = {
+            "source_id": self.source_id,
+            "inbox_id": self.inbox_id,
+            "contact_id": self.contact_id,
+        }
         response = self.client.post(
             f"/api/v1/accounts/{self.account_id}/conversations",
             json=payload,
@@ -62,6 +69,7 @@ class MessageUser(HttpUser):
                 raise ConversationFailedException("Conversation Creation Failed") from e
 
     def on_start(self):
+        self.source_id = fake.uuid4()
         self.api_access_token = os.getenv("API_ACCESS_TOKEN", "99999")
         self.account_id = os.getenv("ACCOUNT_ID", "99999")
         self.inbox_id = os.getenv("INBOX_ID", "99999")
@@ -72,9 +80,11 @@ class MessageUser(HttpUser):
 
         # Only create one new contact an conversation per run
         print("Starting Create Contact")
-        self.contact_source_id = self.create_contact()
-        # print("Starting Create Conversation")
-        # self.conversation_id = self.create_conversation()
+        self.contact_id = self.create_contact()
+        print("Starting Create Conversation")
+        self.conversation_id = self.create_conversation()
+
+        print("Setup Complete")
 
     @task
     def send_message(self):
