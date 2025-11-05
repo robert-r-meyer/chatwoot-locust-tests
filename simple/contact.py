@@ -2,12 +2,10 @@ import os
 
 import requests
 
-inbox_id = os.getenv("INBOX_ID", "1")
-account_id = os.getenv("ACCOUNT_ID", "1")
+inbox_id = os.getenv("INBOX_ID", "9999999")
+account_id = os.getenv("ACCOUNT_ID", "9999999")
 
-url = (
-    "https://experience.robert-dev.dev.avelabs.ai/api/v1/accounts/{account_id}/contacts"
-)
+url = f"http://experience.experience:3000/api/v1/accounts/{account_id}/contacts"
 
 payload = {
     "inbox_id": inbox_id,
