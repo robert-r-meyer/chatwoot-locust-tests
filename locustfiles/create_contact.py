@@ -1,3 +1,5 @@
+import os
+
 import requests
 
 # url = "https://experience.robert-dev.dev.avelabs.ai/app/accounts/1/contacts"
@@ -15,7 +17,7 @@ payload = {
     "custom_attributes": {},
 }
 headers = {
-    "api_access_token": "1M7M1s8oU7u4V2PGFbRr25nS",
+    "api_access_token": os.getenv("API_ACCESS_TOKEN"),
     "Content-Type": "application/json",
 }
 
