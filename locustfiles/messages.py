@@ -90,7 +90,7 @@ class MessageUser(HttpUser):
     def send_message(self):
         print("Sending Message")
         message_body: str = fake.sentence()
-        payload = {
+        payload: dict[str, str | bool] = {
             "content": message_body,
             "message_type": "incoming",
             "private": False,
