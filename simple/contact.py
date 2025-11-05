@@ -15,7 +15,6 @@ payload = {
     "name": fake.name(),
     "email": fake.email(),
     "blocked": False,
-    "phone_number": fake.phone_number(),
     "avatar_url": "https://example.com/avatar.png",
     "identifier": fake.uuid4(),
     "additional_attributes": {"type": "customer", "age": 30},
